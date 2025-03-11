@@ -34,3 +34,10 @@ def setup_routes(app: Flask):
         endpoint="pagination",
         view_func=jwl_controller.pagination,
         methods=['GET'])
+    
+       
+    app.add_url_rule(
+        rule='/jewelry/count',
+        endpoint="count",
+        view_func=jwl_controller.count,
+        methods=['GET'])

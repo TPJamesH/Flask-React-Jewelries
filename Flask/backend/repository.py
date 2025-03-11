@@ -34,8 +34,6 @@ class JewelryRepository:
         self.session.execute(query)
         self.session.commit() #always commit after executing modification-related query
     
-
-    
     def query_by_type(self, jewelry_type:str) -> list[Jewelry]:
         query = select(Jewelry).where(cast(Jewelry.type,String) == jewelry_type)
         return self.session.execute(query).scalars().all()
@@ -89,6 +87,8 @@ class JewelryRepository:
         query = select(Jewelry).where(Jewelry.id > key).order_by(Jewelry.id).limit(limit)
         return self.session.execute(query).scalars().all()
 
+    def countTotal(self):
+        return self.session.query(Jewelry).count()
     #reference: results = pagination(key=0,limit=10)
     #Next Page: 
         #last_id = results[-1].id

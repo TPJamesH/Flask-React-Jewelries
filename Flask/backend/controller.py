@@ -43,4 +43,5 @@ class JewelryController:
         except Exception as e:
             return jsonify({"error": str(e)}),500
 
-        
+    def count(self):
+        return self.jewelry_service.countTotal()

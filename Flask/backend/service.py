@@ -110,4 +110,7 @@ class JewelryService:
          #execute dto + uuid function
         return self.__dtoconverter_with_uuid(jewelry_list)
     
+    def countTotal(self):
+        return {"totalElement":self.repository.countTotal()}
+    
    
