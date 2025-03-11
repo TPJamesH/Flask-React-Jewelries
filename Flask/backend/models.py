@@ -42,10 +42,21 @@ class Jewelry(Base):
     
         
     def __repr__(self) -> str:
-        return (f"Jewelry(id={self.id!r}, name = {self.name!r}), type = {self.type!r}," 
+        return (f"id={self.id!r}, name = {self.name!r}, type = {self.type!r}," 
                 f"provider = {self.provider!r}, totalWeight = {self.totalWeight!r}," 
                 f"stoneWeight = {self.stoneWeight!r},goldWeight = {self.goldWeight!r}"
         )
+    def to_dict(self):
+        return{
+            "id": self.id,
+            "name": self.name,
+            "type": self.type.value, #get the enum value here
+            "provider": self.provider,
+            "totalWeight": self.totalWeight,
+            "stoneWeight":self.stoneWeight,
+            "goldWeight": self.goldWeight
+            
+        }
 
 #Initialize database
 Base.metadata.drop_all(database.engine)

@@ -1,5 +1,5 @@
 from models import Jewelry
-from sqlalchemy import select, or_,update
+from sqlalchemy import String, select, or_,update,cast
 from database import Database
 
 class JewelryRepository:
@@ -37,7 +37,7 @@ class JewelryRepository:
 
     
     def query_by_type(self, jewelry_type:str) -> list[Jewelry]:
-        query = select(Jewelry).where(Jewelry.type == jewelry_type)
+        query = select(Jewelry).where(cast(Jewelry.type,String) == jewelry_type)
         return self.session.execute(query).scalars().all()
     
     def query_by_name(self, jewelry_name:str) -> list[Jewelry]:
@@ -68,9 +68,9 @@ class JewelryRepository:
         
         #build query
         filters = [
-            Jewelry.type.ilike(f"%{searchText}%"),
-            Jewelry.name.ilike(f"%{searchText}%"),
-            Jewelry.provider.ilike(f"%{searchText}%")
+            cast(Jewelry.type,String).ilike(f"{searchText}"),
+            Jewelry.name.ilike(f"{searchText}"),
+            Jewelry.provider.ilike(f"{searchText}")
         ]
         if search_float is not None:
             filters.extend([

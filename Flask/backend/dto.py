@@ -1,4 +1,4 @@
-from backend.models import Jewelry
+from models import Jewelry
 
 class JewelryDTO:
     def __init__(self, type: str, name: str, provider: str, totalWeight: float, stoneWeight: float, goldWeight:float):
@@ -20,7 +20,18 @@ class JewelryDTO:
             goldWeight= jewelry_model.goldWeight
             
         )
+    def to_dict(self):
+        return{
+            "name": self.name,
+            "type": self.type, #since the original already have the actual enum value, we only need to call type only
+            "provider": self.provider,
+            "totalWeight": self.totalWeight,
+            "stoneWeight":self.stoneWeight,
+            "goldWeight": self.goldWeight
+            
+        }
+        
     def __repr__(self) -> str:
-        return f"JewelryDTO(type = {self.type}, name = {self.name}, provider = {self.provider}, totalWeight = {self.totalWeight}, stoneWeight = {self.stoneWeight}, goldWeight = {self.goldWeight})"
+        return f"type = {self.type}, name = {self.name}, provider = {self.provider}, totalWeight = {self.totalWeight}, stoneWeight = {self.stoneWeight}, goldWeight = {self.goldWeight})"
     
         
