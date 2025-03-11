@@ -32,9 +32,14 @@ class JewelryService:
             #by default, python objects are not serializable by JSON, so we have to convert into a dictionary
             return_list = [j_dto.to_dict() for j_dto in jewelry_list_dto]
             
+            cache_list = []
+            for key,value in self.cache.items():
+                cache_list.append(
+                    f'{key}'
+                )
              #return a dictionary (mimicking JSON)
          return {
-            "token": self.cache,
+            "token": cache_list,
             "jewelry_list": return_list
             }
         
