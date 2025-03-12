@@ -1,14 +1,19 @@
 from repository import JewelryRepository
 from models import Jewelry
 from typing import List,Dict,Any
+import os
 import uuid
+from app import app
 import dto
+from werkzeug.utils import secure_filename
+from file import allowed_file
 class JewelryService:
     #Note, the cache is necessary since the original id is still being used internally (e.g., update/delete operation)
     def __init__(self):
         self.repository = JewelryRepository()
         self.cache = {}
         self.dto = dto
+        
     
     def __dtoconverter_with_uuid(self, j_list: List[Jewelry]):
          self.cache.clear() #
@@ -113,4 +118,12 @@ class JewelryService:
     def countTotal(self):
         return {"totalElement":self.repository.countTotal()}
     
-   
+    def upload_file(self,file,jewelry_id:str):
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            # filepath = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+            # file.save(filepath)
+            binary_data = file.read()
+            self.repository.upload_image(binary_data,self.cache[jewelry_id])
+            return True
+        return False

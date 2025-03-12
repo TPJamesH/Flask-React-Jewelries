@@ -5,9 +5,25 @@ class JewelryController:
     def __init__(self):
         self.jewelry_service = JewelryService()
 
+    def upload_file(self):
+        #check if there's a file
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file'}),400
+        
+        file = request.files['file']
+        
+        #check if a file is selected
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}),400
+        
+        #validation
+        if self.jewelry_service.upload_file(file):
+            return jsonify({'message': 'File successsfully uploaded', 'filename': file.filename}),200
+        return jsonify({'error': 'File not allowed'}),400
+    
     def getAll(self):
         try:
-            data = self.jewelry_service.get_all()       
+            data = self.jewelry_service.get_all()      
             return jsonify(data)
         except Exception as e:
             return jsonify({"error": str(e)}),500
@@ -45,3 +61,5 @@ class JewelryController:
 
     def count(self):
         return self.jewelry_service.countTotal()
+    
+  

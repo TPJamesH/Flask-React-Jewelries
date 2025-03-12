@@ -3,13 +3,19 @@ import generator
 from flask_sqlalchemy import SQLAlchemy
 from route import setup_routes
 from flask_cors import CORS
-
+import os
+from file import UPLOAD_FOLDER
 # create the app
-db = SQLAlchemy()
 app = Flask(__name__)
 CORS(app)
 
+# Configure (temp) images folder
+# UPLOAD_FOLDER = "uploads"
+# EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # database configuration
+db = SQLAlchemy()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://flask_user:flask_user_password@localhost:5432/flask_app_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #database initialize

@@ -93,6 +93,13 @@ class JewelryRepository:
     #Next Page: 
         #last_id = results[-1].id
         #results = pagination(key=last_id,limit=10)
+    
+    def upload_image(self, binary_data: str,jewelry_id: int):
+        query = update(Jewelry).where(Jewelry.id == jewelry_id).values(
+            picture = binary_data
+        )
+        self.session.execute(query)
+        self.session.commit() #always commit after executing modification-related query
     """
     REFERENCE QUERY
     query = select(Customer).where(
