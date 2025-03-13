@@ -84,7 +84,6 @@ class JewelryRepository:
     
     #pagination with search
     def pagination_search(self,key:int, limit:int,searchText:str) -> list[Jewelry]:
-        print("run")
         try:
             search_float = float(searchText)
         except ValueError:
@@ -111,13 +110,12 @@ class JewelryRepository:
                 )
             ).order_by(Jewelry.id).limit(limit)
         
-      
-        
         return self.session.execute(query).scalars().all()
     
     
     #keyset-based pagination
     def pagination(self,key: int, limit: int) -> list[Jewelry]:
+        print(key)
         query = select(Jewelry).where(Jewelry.id > key).order_by(Jewelry.id).limit(limit)
         return self.session.execute(query).scalars().all()
 

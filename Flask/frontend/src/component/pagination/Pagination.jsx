@@ -1,6 +1,6 @@
 import usePagination from "./hook/usePagination"
 import PaginationControls from "./child_component/paginationControl";
-function Pagination({setItems, pageSize, pageNo, fetchFunction, totalElement }) {
+function Pagination({ setItems, pageSize, pageNo, fetchFunction, totalElement }) {
 
     const { currentPage, nextPage, prevPage, setPage, totalItems } = usePagination({
         fetchData: fetchFunction,

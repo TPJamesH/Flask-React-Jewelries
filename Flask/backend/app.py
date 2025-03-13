@@ -7,7 +7,9 @@ import os
 from file import UPLOAD_FOLDER
 # create the app
 app = Flask(__name__)
+#CORS(app)
 CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Configure (temp) images folder
 # UPLOAD_FOLDER = "uploads"
@@ -25,7 +27,5 @@ with app.app_context():
     generator.generator(db)
     setup_routes(app)
 
-
-    
 if __name__ == "__main__":
     app.run(debug=True)

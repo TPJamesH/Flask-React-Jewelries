@@ -12,8 +12,9 @@ const usePagination = ({
     useEffect(() => {
         const loadPage = async () => {
             const size = await totalElement()
-        
-            const response = await fetchData((currentPage * pageSize) - pageSize, pageSize);
+            const response = await fetchData(Math.abs(currentPage * pageSize - pageSize), pageSize);
+            
+           
             var arr = []
             for (let i = 0; i < response.length; i++) {
                 arr.push(response[i])
