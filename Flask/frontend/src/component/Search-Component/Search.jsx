@@ -9,14 +9,13 @@ export default function SearchPanel({ pageNo, pageSize,setFunction }) {
     return (
         <div className="flex flex-row gap-2 justify center">
             <Field>
-                <Label className="block mb-2 pt-8 text-xl font-medium text-gray-900 ">Search an user by their first name, last name, or email</Label>
+                <Label className="block mb-2 pt-8 text-xl font-medium text-gray-900 ">Search a jewelry product through type, provider, or gold weight</Label>
                 <InputGroup
                     name="searchPanel"
                     value={searchVal}
                     classNameInput="mr-2 w-9/12 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 "
                     classNameLabel="block mb-2 pt-8 text-xl font-medium text-gray-900 "
-                    label="Search"
-                    placeholder="Search an user by their first name, last name, or email"
+                    placeholder="Enter search term here"
                     type="text"
 
                 />
