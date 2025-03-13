@@ -1,5 +1,5 @@
 //Destructured directly from function parameter
-const HeadlessCard = ({ header, body, width, height, interact, extraStyle, styleClass, titleClass, bodyClass}) => {
+const HeadlessCard = ({key, header, body, width, height, interact, extraStyle, styleClass, titleClass, bodyClass}) => {
 
     if (width) {
         styleClass += ` ${width}`
@@ -12,7 +12,7 @@ const HeadlessCard = ({ header, body, width, height, interact, extraStyle, style
         styleClass += ` ${extraStyle}`
     }
     return (
-        <div className={styleClass}>
+        <div className={styleClass} id ={key}>
             <div>
                 <h6 className={titleClass}>{header} {interact}</h6>
             </div>

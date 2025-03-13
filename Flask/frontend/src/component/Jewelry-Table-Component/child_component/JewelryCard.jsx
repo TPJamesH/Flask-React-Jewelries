@@ -1,10 +1,12 @@
 import HeadlessCard from "../../Headless/Card/HeadlessCard";
 
-function JewelryCard({ index, item }) {
+export default function JewelryCard({ index, item }) {
     return (
         <HeadlessCard
+            key= {item.token}
             styleClass={"max-w-sm rounded overflow-hidden shadow-lg"}
             bodyClass={"px-6 py-4"}
+            header={<img src={item.picture}/>}
             body={
                 <>
                     <div className="font-bold text-xl mb-2">{item.name}
