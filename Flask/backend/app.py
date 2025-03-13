@@ -1,7 +1,7 @@
 from flask import Flask
 import generator
 from flask_sqlalchemy import SQLAlchemy
-from route import setup_routes
+from route_config import setup_routes
 from flask_cors import CORS
 import os
 from file import UPLOAD_FOLDER

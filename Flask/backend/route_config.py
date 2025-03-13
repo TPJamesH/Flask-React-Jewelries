@@ -35,7 +35,12 @@ def setup_routes(app: Flask):
         view_func=jwl_controller.pagination,
         methods=['GET'])
     
-       
+    app.add_url_rule(
+        rule='/jewelry/<int:key>/<int:limit>/<string:searchText>',
+        endpoint="pagination_search",
+        view_func=jwl_controller.pagination_search,
+        methods=['GET'])
+    
     app.add_url_rule(
         rule='/jewelry/count',
         endpoint="count",

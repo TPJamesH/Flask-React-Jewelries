@@ -59,6 +59,14 @@ class JewelryController:
         except Exception as e:
             return jsonify({"error": str(e)}),500
 
+    def pagination_search(self,key: int, limit: int, searchText:str):
+         
+          if key is not None and limit is not None and searchText is not None:
+              try:
+                  data = self.jewelry_service.pagination_search(key,limit,searchText)
+                  return jsonify(data)
+              except Exception as e:
+                  return jsonify({"error": str(e)}),500
     def count(self):
         return self.jewelry_service.countTotal()
     

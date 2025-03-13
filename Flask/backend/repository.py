@@ -1,5 +1,5 @@
 from models import Jewelry
-from sqlalchemy import String, select, or_,update,cast
+from sqlalchemy import String, select, or_,and_,update,cast
 from database import Database
 
 class JewelryRepository:
@@ -81,6 +81,40 @@ class JewelryRepository:
         query = select(Jewelry).where(or_(*filters))
         
         return self.session.execute(query).scalars().all()
+    
+    #pagination with search
+    def pagination_search(self,key:int, limit:int,searchText:str) -> list[Jewelry]:
+        print("run")
+        try:
+            search_float = float(searchText)
+        except ValueError:
+            search_float = None
+
+        #build query for search
+        filters = [
+            cast(Jewelry.type,String).ilike(f"{searchText}"),
+            Jewelry.name.ilike(f"{searchText}"),
+            Jewelry.provider.ilike(f"{searchText}")
+        ]
+        if search_float is not None:
+            filters.extend([
+                Jewelry.totalWeight == search_float,
+                Jewelry.stoneWeight == search_float,
+                Jewelry.goldWeight == search_float
+            ])
+      
+        #query: filters + paginations
+        query = select(Jewelry).where(
+            and_(
+                (Jewelry.id > key),
+                or_(*filters)
+                )
+            ).order_by(Jewelry.id).limit(limit)
+        
+      
+        
+        return self.session.execute(query).scalars().all()
+    
     
     #keyset-based pagination
     def pagination(self,key: int, limit: int) -> list[Jewelry]:

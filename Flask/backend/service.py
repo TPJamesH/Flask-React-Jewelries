@@ -1,9 +1,7 @@
 from repository import JewelryRepository
 from models import Jewelry
-from typing import List,Dict,Any
-import os
+from typing import List
 import uuid
-from app import app
 import dto
 from werkzeug.utils import secure_filename
 from file import allowed_file
@@ -30,7 +28,8 @@ class JewelryService:
                 current_j_dict["provider"],
                 current_j_dict["totalWeight"],
                 current_j_dict["stoneWeight"],
-                current_j_dict["goldWeight"]
+                current_j_dict["goldWeight"],
+                current_j_dict["picture"]
                 )
             )
             
@@ -55,7 +54,10 @@ class JewelryService:
         #execute dto + uuid function
         return self.__dtoconverter_with_uuid(jewelry_list)        
        
-        
+    def pagination_search(self,key:int, limit: int, searchText: str) -> list[Jewelry]:
+           jewelry_list = self.repository.pagination_search(key,limit,searchText)
+           return self.__dtoconverter_with_uuid(jewelry_list)
+            
     def pagination(self, key: int, limit: int) -> list[Jewelry]:
         jewelry_list = self.repository.pagination(key,limit)
         #execute dto + uuid function

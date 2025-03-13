@@ -1,7 +1,7 @@
 import enum
-from typing import Optional
+from typing import Optional,List
 from database import Database
-from sqlalchemy import String, Enum,Computed,ARRAY
+from sqlalchemy import ARRAY, String, Enum,Computed
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 database = Database()
 class GoldType_enum(enum.Enum):
@@ -37,7 +37,7 @@ class Jewelry(Base):
     stoneWeight: Mapped[float] = mapped_column(nullable=False)
     goldWeight: Mapped[float] = mapped_column(Computed(totalWeight - stoneWeight),nullable=False)
     picture: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
-    support_picture = Mapped[ARRAY] = mapped_column(ARRAY(String(255)),nullable=True)
+    support_picture: Mapped[ARRAY] = mapped_column(ARRAY(String(255)),nullable=True)
     #Reference for string concatenation:
     #name_and_provider: Mapped[str] = mapped_column(Computed(name+ " " + provider),nullable=False)
     
@@ -55,7 +55,8 @@ class Jewelry(Base):
             "provider": self.provider,
             "totalWeight": self.totalWeight,
             "stoneWeight":self.stoneWeight,
-            "goldWeight": self.goldWeight
+            "goldWeight": self.goldWeight,
+            "picture": self.picture
             
         }
 
