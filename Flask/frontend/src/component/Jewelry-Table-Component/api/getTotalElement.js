@@ -1,7 +1,7 @@
 import sendHttpRequest from "../../../http_call/HttpRequest";
 import JewelryUrlConfig from "../../../service_url/JewelryUrlConfig";
 
-async function loadJewelryData(){
+export default async function getTotalElement(){
     const response = await sendHttpRequest(JewelryUrlConfig.JEWELRY_TOTAL_ELEMENT)
     if (response.status == 200) {
         return response.json.totalElement;
@@ -12,4 +12,3 @@ async function loadJewelryData(){
     }
 }
 
-export default loadJewelryData

@@ -1,20 +1,25 @@
 import useGridTableLoadData from "./hook/useGetGridTableData";
-const GridTable = ({
+function GridTable({
     CardComponent,
     loadItemApi,
-    NewItemModal,
     SearchPanel,
-    deleteUserPanel,
-    updateUserModal
+    Pagination,
+    loadItemPaginated,
+    defaultLoadItem,
+    pageSize,
+    pageNo,
+    totalElement
 
-}) => {
-    const { items, fetchItems, setItems } = useGridTableLoadData(loadItemApi)
+
+}) {
+    const { items, fetchItems, setItems } = useGridTableLoadData(defaultLoadItem)
     return (
         <>
 
-            < NewItemModal reloadFunction={fetchItems} />
-
-            <SearchPanel setFunction={setItems} />
+            <SearchPanel 
+            setFunction={setItems} 
+            pageNo={pageNo} 
+            pageSize={pageSize} />
 
             <div className="
                 grid
@@ -31,7 +36,12 @@ const GridTable = ({
 
             </div>
 
-
+            <Pagination setItems={setItems}
+                        pageSize={pageSize}
+                        pageNo = {pageNo}
+                        fetchFunction={loadItemPaginated}
+                        totalElement={totalElement}
+            />
         </>
     );
 };

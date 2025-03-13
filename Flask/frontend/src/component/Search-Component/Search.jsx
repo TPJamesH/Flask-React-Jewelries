@@ -3,7 +3,7 @@ import { Field, Label } from "@headlessui/react"
 import { InputGroup } from "../Headless/Input/Input";
 import search from "./api/search";
 
-export default function SearchPanel({ setFunction }) {
+export default function SearchPanel({ pageNo, pageSize,setFunction }) {
     const [searchVal, setSearchVal] = useState("");
 
     return (
@@ -22,7 +22,7 @@ export default function SearchPanel({ setFunction }) {
                 />
                 <button
                     onClick={
-                        () => search(searchVal, setFunction)
+                        () => search(pageNo, pageSize,searchVal, setFunction)
                     }
                     className=" text-white text-xl bg-green-800 rounded-lg items-center justify-center px-4 w-auto h-12">Search
                 </button>

@@ -1,7 +1,7 @@
 import sendHttpRequest from "../../../http_call/HttpRequest";
 import JewelryUrlConfig from "../../../service_url/JewelryUrlConfig";
 //NOTE: WE ARE USING KEY-BASED PAGINATION
-async function showByPage(id, pageSize) {
+export default async function showByPage(id, pageSize) {
     let jewelryResponse = await sendHttpRequest(
         JewelryUrlConfig.JEWELRY_SERVICE_URL + `/${id}/${pageSize}`
     )
