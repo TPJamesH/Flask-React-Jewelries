@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Auth from "../Authentication-Component/Authenticate/Auth";
+import Auth from "../component/Authentication-Component/Authenticate/Auth";
 function Authentication() {
     return (
         <div className="min-h-screen flex items-center justify-center">
