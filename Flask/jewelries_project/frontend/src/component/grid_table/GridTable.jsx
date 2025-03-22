@@ -8,7 +8,10 @@ function GridTable({
     defaultLoadItem,
     pageSize,
     pageNo,
-    totalElement
+    totalElement,
+    AddComponent,
+    DeleteComponent,
+    UpdateComponent
 
 
 }) {
@@ -16,11 +19,13 @@ function GridTable({
     return (
         <>
 
-            <SearchPanel 
-            setFunction={setItems} 
-            pageNo={pageNo} 
-            pageSize={pageSize} />
 
+            <SearchPanel
+                setFunction={setItems}
+                pageNo={pageNo}
+                pageSize={pageSize} />
+
+            <AddComponent />
             <div className="
                 grid
                 sm:grid-cols-1 md:grid-cols-2 
@@ -28,19 +33,27 @@ function GridTable({
                 mx-auto p-4
                 gap-4 
             ">
+
                 {items && items.length > 0 ?
                     items.map((item, index) => (
-                        <CardComponent item={item} key={index} />
+                        <CardComponent
+                            item={item}
+                            index={index}
+                            UpdateComponent={UpdateComponent}
+                            DeleteComponent={DeleteComponent}
+                            reloadFunction={fetchItems}
+                            setFunction={setItems}
+                        />
 
                     )) : (<p className="transform translate-x-3/4">No items available</p>)}
 
             </div>
 
             <Pagination setItems={setItems}
-                        pageSize={pageSize}
-                        pageNo = {pageNo}
-                        fetchFunction={loadItemPaginated}
-                        totalElement={totalElement}
+                pageSize={pageSize}
+                pageNo={pageNo}
+                fetchFunction={loadItemPaginated}
+                totalElement={totalElement}
             />
         </>
     );

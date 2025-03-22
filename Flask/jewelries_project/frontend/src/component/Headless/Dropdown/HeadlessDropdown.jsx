@@ -1,17 +1,18 @@
 // HeadlessDropDown.jsx
 import React, { useState } from 'react';
 
-function HeadlessDropDown({ options, children }) {
-  const [selectedValue, setSelectedValue] = useState(options[0].value);
+const HeadlessDropDown = ({ children,...props}) => {
+  const [selectedValue, setSelectedValue] = useState(props.options[0]);
 
   function handleChange(e) {
     setSelectedValue(e.target.value);
+    props.handleFunction(e.target.value)
   }
 
   return children({
     selectedValue,
     handleChange,
-    options
+    ...props
   });
 }
 

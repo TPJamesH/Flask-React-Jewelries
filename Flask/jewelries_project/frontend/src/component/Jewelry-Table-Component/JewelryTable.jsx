@@ -5,13 +5,17 @@ import SearchPanel from "../Search-Component/Search";
 import Pagination from "../pagination/Pagination";
 import showByPage from "../pagination/api/showByPage";
 import getTotalElement from "./api/getTotalElement";
+import AddPanel from "../panel_new/AddPanel";
+import UpdatePanel from "../panel_update/UpdatePanel";
+import DeletePanel from "../panel_delete/DeletePanel"
 export default function JewelryTable() {
     const pageSize = 5
     const pageNo = 0
     const loadItemPaginated = (pageNo, pageSize) => showByPage(pageNo, pageSize)
     const defaultLoadItem = () => loadItemPaginated(pageNo, pageSize)
     return (
-        <GridTable CardComponent={JewelryCard}
+        <GridTable
+            CardComponent={JewelryCard}
             loadItemApi={loadJewelryData}
             Pagination={Pagination}
             loadItemPaginated={loadItemPaginated}
@@ -20,7 +24,9 @@ export default function JewelryTable() {
             pageNo={pageNo}
             SearchPanel={SearchPanel}
             totalElement={getTotalElement}
-
+            AddComponent={AddPanel}
+            DeleteComponent={DeletePanel}
+            UpdateComponent={UpdatePanel}
         />
     )
 }

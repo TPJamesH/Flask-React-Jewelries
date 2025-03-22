@@ -4,7 +4,7 @@ import JewelryTable from './component/Jewelry-Table-Component/JewelryTable';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App lg:translate-x-0	md:translate-x-0	translate-x-14">
       <JewelryTable/>
     </div>
   );
