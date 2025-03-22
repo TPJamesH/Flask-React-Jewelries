@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,jsonify,request
 import generator
 from flask_sqlalchemy import SQLAlchemy
 from route_config import setup_routes
@@ -28,6 +28,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://flask_user:flask_user_pass
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #database initialize
 db.init_app(app)
+
+#Handle preflight
+@app.before_request
+def handle_preflight():
+    if request.method == 'OPTIONS':
+            response = jsonify({"message": "CORS preflight handled"})
+            response.headers.add("Access-Control-Allow-Origin", "*")  # Adjust origins in production
+            response.headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+            response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
+            return response, 200
+        
 #Create the database tables
 with app.app_context():
     generator.generator(db)

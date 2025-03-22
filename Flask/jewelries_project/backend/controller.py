@@ -66,7 +66,7 @@ class JewelryController:
                   data = self.jewelry_service.pagination_search(key,limit,searchText)
                   return jsonify(data)
               except Exception as e:
-                  return jsonify({"error": str(e)}),500
+                  return jsonify([]),404
     def count(self):
         return self.jewelry_service.countTotal()
     

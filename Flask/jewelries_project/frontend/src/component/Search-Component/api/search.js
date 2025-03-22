@@ -24,10 +24,19 @@ export default async function search(pageNo, pageSize, searchKey, setFunction) {
             setFunction(arr);
             break
         case 500:
-            return "Server Error"
+            setFunction([])
+            console.log("Server Error")
+            break;
         case 400:
-            return "Client Error"
+            setFunction([])
+            console.log("Client Error")
+            break;
+        case 404:
+            setFunction([])
+            console.log("Not Found ")
+            break;
         default:
-            return "Connection error"
+            setFunction([])
+            console.log("Connection error")
     }
 }
