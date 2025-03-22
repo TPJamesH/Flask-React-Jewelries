@@ -50,6 +50,7 @@ export default function AddPanel({item,reloadFunction,setFunction}) {
                         </div>
                         <div class="mb-6">
                            <Dropdown
+                                name="type"
                                 options={[
                                     {label:type,value:type},
                                     {label:"Ring", value: "Ring"},
