@@ -15,6 +15,7 @@ function InputGroup({
   required,
   classNameInput,
   classNameLabel,
+  setVal
 }) {
   //pass down from InputGroup to HeadlessInput
   return (
@@ -25,6 +26,7 @@ function InputGroup({
       disabled={disabled}
       required={required}
       value={value}
+      setVal={setVal}
     >
       {/* 
       The children function is not an internal part of HeadlessInput;

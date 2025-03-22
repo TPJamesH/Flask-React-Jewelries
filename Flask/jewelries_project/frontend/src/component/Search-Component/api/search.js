@@ -15,20 +15,18 @@ export default async function search(pageNo, pageSize, searchKey, setFunction) {
 
     switch (response.status) {
         case 200:
-            let arr = response.json.customers
+            let arr = response.json.jewelry_list
             let i = 0
             arr.forEach((element) => {
-                element.token = response.json.tokens[i]
+                element.token = response.json.token[i]
                 i++;
             });
             setFunction(arr);
             break
         case 500:
             return "Server Error"
-            break
         case 400:
             return "Client Error"
-            break
         default:
             return "Connection error"
     }

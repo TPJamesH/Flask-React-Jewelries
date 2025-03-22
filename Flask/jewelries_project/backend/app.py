@@ -8,8 +8,14 @@ from file import UPLOAD_FOLDER
 # create the app
 app = Flask(__name__)
 #CORS(app)
-CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+# Configure CORS
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",  # Allow all origins; replace '*' with specific domains in production
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 # Configure (temp) images folder
 # UPLOAD_FOLDER = "uploads"

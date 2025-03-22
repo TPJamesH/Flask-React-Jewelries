@@ -27,7 +27,7 @@ def setup_routes(app: Flask):
         rule ='/jewelry/search/<string:searchText>',
         endpoint="search_jewelry",
         view_func=jwl_controller.search_jewelry,
-        methods=['GET'])
+        methods=['GET','POST','OPTIONS'])
     
     app.add_url_rule(
         rule='/jewelry/<int:key>/<int:limit>',
@@ -36,10 +36,10 @@ def setup_routes(app: Flask):
         methods=['GET'])
     
     app.add_url_rule(
-        rule='/jewelry/<int:key>/<int:limit>/<string:searchText>',
+        rule='/jewelry/search/<int:key>/<int:limit>/<string:searchText>',
         endpoint="pagination_search",
         view_func=jwl_controller.pagination_search,
-        methods=['GET'])
+        methods=['GET','POST','OPTIONS'])
     
     app.add_url_rule(
         rule='/jewelry/count',
