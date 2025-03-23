@@ -13,7 +13,7 @@ class JewelryService:
         self.dto = dto
         
     
-    def __dtoconverter_with_uuid(self, j_list: List[Jewelry]):
+    def __dtoconverter_with_uuid_list(self, j_list: List[Jewelry]):
          self.cache.clear() #
          jewelry_list_dto = []
          for jewelry in j_list:
@@ -46,22 +46,39 @@ class JewelryService:
             "token": cache_list,
             "jewelry_list": return_list
             }
-        
+    
+    def __dtoconverter_with_uuid(self, jewelry_input: Jewelry):
+        jewelry =  jewelry_input.to_dict()
+       
+        return {"jewelry": self.dto.JewelryDTO(
+                jewelry["type"],
+                jewelry["name"],
+                jewelry["provider"],
+                jewelry["totalWeight"],
+                jewelry["stoneWeight"],
+                jewelry["goldWeight"],
+                jewelry["picture"]
+                ).to_dict()}
     
     def get_all(self):
         #Get the list of the jewelries
         jewelry_list = self.repository.get_all()
         #execute dto + uuid function
-        return self.__dtoconverter_with_uuid(jewelry_list)        
+        return self.__dtoconverter_with_uuid_list(jewelry_list)        
        
+    def get_by_id(self, id_input:str) -> Jewelry:
+        jewelry = self.repository.get_by_id(self.cache[id_input])
+        #print(jewelry)
+        return self.__dtoconverter_with_uuid(jewelry)
+    
     def pagination_search(self,key:int, limit: int, searchText: str) -> list[Jewelry]:
            jewelry_list = self.repository.pagination_search(key,limit,searchText)
-           return self.__dtoconverter_with_uuid(jewelry_list)
+           return self.__dtoconverter_with_uuid_list(jewelry_list)
             
     def pagination(self, key: int, limit: int) -> list[Jewelry]:
         jewelry_list = self.repository.pagination(key,limit)
         #execute dto + uuid function
-        return self.__dtoconverter_with_uuid(jewelry_list)        
+        return self.__dtoconverter_with_uuid_list(jewelry_list)        
             
     def add_jewelry(self,jewelry):
         if jewelry["totalWeight"] < jewelry["stoneWeight"]:
@@ -83,39 +100,39 @@ class JewelryService:
     def query_by_type(self, jewelry_type:str) -> list[Jewelry]:
         jewelry_list = self.repository.query_by_type(jewelry_type)
         #execute dto + uuid function
-        return self.__dtoconverter_with_uuid(jewelry_list)
+        return self.__dtoconverter_with_uuid_list(jewelry_list)
     
     def query_by_name(self, jewelry_name:str) -> list[Jewelry]:
         jewelry_list = self.repository.query_by_name(jewelry_name)
          #execute dto + uuid function
-        return self.__dtoconverter_with_uuid(jewelry_list)
+        return self.__dtoconverter_with_uuid_list(jewelry_list)
 
     
     def query_by_provider(self, jewelry_provider:str) -> list[Jewelry]:
         jewelry_list = self.repository.query_by_name(jewelry_provider)
          #execute dto + uuid function
-        return self.__dtoconverter_with_uuid(jewelry_list)
+        return self.__dtoconverter_with_uuid_list(jewelry_list)
     
     def query_by_totalWeight(self,jewelry_totalWeight:float) -> list[Jewelry]:
         jewelry_list = self.repository.query_by_name(jewelry_totalWeight)
          #execute dto + uuid function
-        return self.__dtoconverter_with_uuid(jewelry_list)
+        return self.__dtoconverter_with_uuid_list(jewelry_list)
 
     
     def query_by_stoneWeight(self,jewelry_stoneWeight:float) -> list[Jewelry]:
         jewelry_list = self.repository.query_by_name(jewelry_stoneWeight)
          #execute dto + uuid function
-        return self.__dtoconverter_with_uuid(jewelry_list)
+        return self.__dtoconverter_with_uuid_list(jewelry_list)
     
     def query_by_goldWeight(self, jewelry_goldWeight: float) -> list[Jewelry]:
         jewelry_list = self.repository.query_by_name(jewelry_goldWeight)
          #execute dto + uuid function
-        return self.__dtoconverter_with_uuid(jewelry_list)
+        return self.__dtoconverter_with_uuid_list(jewelry_list)
     
     def query_by_searchText(self,searchText: str) -> list[Jewelry]:
         jewelry_list = self.repository.query_by_searchText(searchText)
          #execute dto + uuid function
-        return self.__dtoconverter_with_uuid(jewelry_list)
+        return self.__dtoconverter_with_uuid_list(jewelry_list)
     
     def countTotal(self):
         return {"totalElement":self.repository.countTotal()}

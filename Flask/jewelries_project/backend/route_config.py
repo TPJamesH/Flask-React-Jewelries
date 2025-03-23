@@ -52,3 +52,10 @@ def setup_routes(app: Flask):
         endpoint="upload_file",
         view_func=jwl_controller.upload_file,
         methods=['POST'])
+    
+    app.add_url_rule(
+         rule="/jewelry/<string:id>",
+        endpoint="get_by_id",
+        view_func=jwl_controller.get_by_id,
+        methods=['GET']
+    )

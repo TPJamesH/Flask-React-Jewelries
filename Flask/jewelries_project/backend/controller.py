@@ -5,6 +5,13 @@ class JewelryController:
     def __init__(self):
         self.jewelry_service = JewelryService()
 
+    def get_by_id(self,id: str):
+        try:
+            data = self.jewelry_service.get_by_id(id)    
+            return jsonify(data)
+        except Exception as e:
+            return jsonify({"error": str(e)}),500
+        
     def upload_file(self):
         #check if there's a file
         if 'file' not in request.files:
@@ -37,7 +44,7 @@ class JewelryController:
         except Exception as e:
             return jsonify({"error": str(e)}),500
         
-    def delete_jewelry(self,id):
+    def delete_jewelry(self,id: str):
         try:
             self.jewelry_service.delete_jewelry(id)
             return jsonify({"message": "Jewelry deleted successfully"}),200
