@@ -1,11 +1,31 @@
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent } from "@/components/ui/card"
+import { toast } from "@/hooks/use-toast"
+
+import { Info, Mail} from "lucide-react"
+
 import { useParams, useRouter } from "react-router-dom";
+
 import sendHttpRequest from "../http_call/HttpRequest";
 import JewelryUrlConfig from "../service_url/JewelryUrlConfig";
+
 export default async function ProductPage() {
     const params = useParams()
     const router = useRouter()
+    const [formData, setFormData] = useState({
+        name: "",
+        phone: "",
+        consent: false
+
+    })
+    cost[isSubmitting, setIsSubmitting] = useState(false)
+
     const product = await sendHttpRequest(
         JewelryUrlConfig.JEWELRY_SERVICE_URL + `/${params.token}`,
         "GET")
@@ -38,46 +58,156 @@ export default async function ProductPage() {
     {////////////////////////////////////////////////////////////////
     }
 
+    {/*Separate later */ }
+    //e:  React.ChangeEvent<HTMLInputElement>
+    function handleInputChange() {
+        const { name, value } = e.target
+        setFormData((prev) => ({ ...prev, [name]: value }))
+    }
+    //check: boolean
+    function handleCheckboxChange(checked) {
+        setFormData((prev) => ({
+            ...prev, consent: checked
+        }))
+    }
+
+    //e:React.FormEvent
+    function handleSubmit(e) {
+        e.preventDefault()
+        setIsSubmitting(true)
+
+        setTimeout(() => {
+            setIsSubmitting(false)
+            toast({
+                title: "Contact information submitted",
+                description: "We will get back to you soon"
+            })
+            setFormData({
+                name: "",
+                phone: "",
+                consent: false
+            })
+        }, 1000)
+
+    }
+
     return (
         <div className="container px-4 py-12 md:px-6 md:py-16">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-start">
+            {/* Product Header */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">{product.name}</h1>
+                    <div className="flex items-center gap-4 mt-2">
+                        <p className="text-2xl font-medium">${product.goldWeight}</p>
+                    </div>
+                </div>
+                <Button variant="outline" onClick={() => router.push("/products")}>
+                    Back to Products
+                </Button>
+            </div>
+
+            {/* Main Content */}
+            <div className="grid md:grid-cols-2 gap-8">
+                {/* Left Column - Image */}
                 <div className="flex justify-center">
                     <img
                         src={product.picture || "/placeholder.svg"}
                         alt={product.name}
-                        className="aspect-square overflow-hidden rounded-xl object-cover object-center"
-                        width={500}
-                        height={500}
+                        className="aspect-square overflow-hidden rounded-xl object-cover object-center w-full max-w-md"
                     />
                 </div>
-                <div className="flex flex-col space-y-6">
-                    <div className="space-y-2">
-                        <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">{product.name}</h1>
-                    </div>
-                    <Separator />
 
-                    <div className="space-y-4">
-                        <h3 className="font-medium">Product Specifications</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {Object.entries(attributes).map(([key, value]) => (
-                                <div key={key} className="flex items-start space-x-2">
-                                    <Info className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                                    <div>
-                                        <p className="font-medium capitalize">{key}</p>
-                                        <p className="text-sm text-muted-foreground">{value}</p>
+                {/* Right Column - Tabs */}
+                <div>
+                    <Tabs defaultValue="details" className="w-full">
+                        <TabsList className="grid w-full grid-cols-3">
+                            <TabsTrigger value="specs">Specifications</TabsTrigger>
+                            <TabsTrigger value="contact">Contact Us</TabsTrigger>
+                        </TabsList>
+
+
+                        {/* Specifications Tab */}
+                        <TabsContent value="specs" className="pt-4">
+                            <Card>
+                                <CardContent className="pt-6">
+                                    <div className="grid grid-cols-1 gap-4">
+                                        {Object.entries(attributes).map(([key, value]) => (
+                                            <div key={key} className="flex items-start space-x-2 pb-2 border-b last:border-0">
+                                                <Info className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                                                <div>
+                                                    <p className="font-medium capitalize">{key}</p>
+                                                    <p className="text-sm text-muted-foreground">{value}</p>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
 
-                    <Separator />
-                    <div className="pt-4">
-                        <Button onClick={() => router.push("/products")}>Back to Products</Button>
-                    </div>
+                        {/* Contact Tab */}
+                        <TabsContent value="contact" className="pt-4">
+                            <Card>
+                                <CardContent className="pt-6">
+                                    <div className="space-y-4">
+                                        <div className="flex items-center space-x-2">
+                                            <Mail className="h-5 w-5 text-primary" />
+                                            <h3 className="font-medium">Interested in this product?</h3>
+                                        </div>
+                                        <p className="text-sm text-muted-foreground">
+                                            Leave your contact information and we'll reach out with more details about this product, including
+                                            special offers and availability updates.
+                                        </p>
+
+                                        <form onSubmit={handleSubmit} className="space-y-4">
+                                            <div className="space-y-2">
+                                                <Label htmlFor="name">Name</Label>
+                                                <Input
+                                                    id="name"
+                                                    name="name"
+                                                    value={formData.name}
+                                                    onChange={handleInputChange}
+                                                    placeholder="Your name"
+                                                    required
+                                                />
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <Label htmlFor="phone">Phone</Label>
+                                                <Input
+                                                    id="phone"
+                                                    name="phone"
+                                                    type="tel"
+                                                    value={formData.phone}
+                                                    onChange={handleInputChange}
+                                                    placeholder="(123) 456-7890"
+                                                    required
+                                                />
+                                            </div>
+
+                                            <div className="flex items-start space-x-2">
+                                                <Checkbox
+                                                    id="consent"
+                                                    checked={formData.consent}
+                                                    onCheckedChange={handleCheckboxChange}
+                                                    required
+                                                />
+                                                <Label htmlFor="consent" className="text-sm font-normal">
+                                                    I agree to be contacted about this product and related offers
+                                                </Label>
+                                            </div>
+
+                                            <Button type="submit" className="w-full" disabled={isSubmitting}>
+                                                {isSubmitting ? "Submitting..." : "Submit"}
+                                            </Button>
+                                        </form>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                    </Tabs>
                 </div>
             </div>
         </div>
     )
-
 }
