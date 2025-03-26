@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Menu, Search, ShoppingCart, User } from "lucide-react"
+import { Menu, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { Input } from "@/components/ui/input"
