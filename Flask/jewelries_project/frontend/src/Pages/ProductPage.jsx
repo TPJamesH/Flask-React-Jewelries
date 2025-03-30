@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
 import { toast } from "@/hooks/use-toast"
 
-import { Info, Mail} from "lucide-react"
+import { Info, Mail, Check, ChevronLeft, ChevronRight } from "lucide-react"
 
 import { useParams, useRouter } from "react-router-dom";
 
@@ -24,7 +24,17 @@ export default async function ProductPage() {
         consent: false
 
     })
-    cost[isSubmitting, setIsSubmitting] = useState(false)
+
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const [activeImageIndex, setActiveImageIndex] = useState(0)
+
+    const productImages = [
+        product.support_picture || "/placeholder.svg?height=500&width=500",
+        `/placeholder.svg?height=500&width=500&text=Image+2`,
+        `/placeholder.svg?height=500&width=500&text=Image+3`,
+        `/placeholder.svg?height=500&width=500&text=Image+4`,
+    ]
 
     const product = await sendHttpRequest(
         JewelryUrlConfig.JEWELRY_SERVICE_URL + `/${params.token}`,
@@ -108,13 +118,59 @@ export default async function ProductPage() {
 
             {/* Main Content */}
             <div className="grid md:grid-cols-2 gap-8">
-                {/* Left Column - Image */}
-                <div className="flex justify-center">
-                    <img
-                        src={product.picture || "/placeholder.svg"}
-                        alt={product.name}
-                        className="aspect-square overflow-hidden rounded-xl object-cover object-center w-full max-w-md"
-                    />
+                {/* Left Column - Image and Carousel*/}
+                <div className="flex flex-col space-y-4">
+                    {/* Main Image */}
+                    <div className="relative rounded-xel overflow-hidden aspect-square bg-muted">
+                        <img
+                            src={productImages[activeImageIndex] || "/placeholder.svg"}
+                            alt={`${product.name} - Image ${activeImageIndex + 1}`}
+                            className="object-cover object-center w-full h-full"
+                        />
+                        {/* Navigation Arrows*/}
+                        <div className="absolute inset-0 flex-items-center justify-between p-2">
+                            <Button
+                                variant="secondary"
+                                size="icon"
+                                className="rounded-full opacity-70 hover:opacity-100"
+                                onClick={prevImage}>
+
+                                <ChevronLeft className="h-6 w-6" />
+                                <span className="sr-only"> Previous image</span>
+                            </Button>
+
+                            <Button
+                                variant="secondary"
+                                size="icon"
+                                className="rounded-full opacity-70 hover:opacity-100"
+                                onClick={nextImage}>
+
+                                <ChevronLeft className="h-6 w-6" />
+                                <span className="sr-only"> Next image</span>
+                            </Button>
+                        </div>
+                    </div>
+                    {/* Thumbnail Carousel */}
+                    <div className="flex space-x-2 justify-center">
+                        {productImages.map((image, index) => (
+                            <button
+                                key={index}
+                                onClick={() => setActiveImageIndex(index)}
+                                className={
+                                    `relative w-16 h-16 rounded-md overflow-hidden border-2 transition-all 
+                                    ${activeImageIndex === index ?
+                                        "border-primary ring-2 ring-primary ring-offset-2" :
+                                        "border-muted hover:border-primary/50"}`
+                                }
+                            >
+                                <img
+                                    src={image || "/placeholder.svg"}
+                                    alt={`Thumbnail ${index + 1}`}
+                                    className="object-cover object-center w-full h-full"
+                                />
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Right Column - Tabs */}
