@@ -29,6 +29,15 @@ export default async function ProductPage() {
 
     const [activeImageIndex, setActiveImageIndex] = useState(0)
 
+    const nextImage = () => {
+        setActiveImageIndex((prev) => (prev + 1) % productImages.length)
+      }
+    
+      const prevImage = () => {
+        setActiveImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length)
+      }
+    
+
     const productImages = [
         product.support_picture || "/placeholder.svg?height=500&width=500",
         `/placeholder.svg?height=500&width=500&text=Image+2`,
@@ -155,7 +164,7 @@ export default async function ProductPage() {
                         {productImages.map((image, index) => (
                             <button
                                 key={index}
-                                onClick={() => setActiveImageIndex(index)}
+                                onClick={() =>  setActiveImageIndex(index)}
                                 className={
                                     `relative w-16 h-16 rounded-md overflow-hidden border-2 transition-all 
                                     ${activeImageIndex === index ?
