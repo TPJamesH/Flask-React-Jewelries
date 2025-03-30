@@ -1,5 +1,5 @@
 
-from controller import JewelryController
+from .controller import JewelryController
 from flask import Flask
 
 def setup_routes(app: Flask):
@@ -7,7 +7,7 @@ def setup_routes(app: Flask):
     
     app.add_url_rule(
         rule='/jewelry/get_all',
-        endpoint="getAll",
+        endpoint="getAllJewelries",
         view_func=jwl_controller.getAll, 
         methods=['GET'])
     
@@ -31,31 +31,31 @@ def setup_routes(app: Flask):
     
     app.add_url_rule(
         rule='/jewelry/<int:key>/<int:limit>',
-        endpoint="pagination",
+        endpoint="pagination_jewelry",
         view_func=jwl_controller.pagination,
         methods=['GET'])
     
     app.add_url_rule(
         rule='/jewelry/search/<int:key>/<int:limit>/<string:searchText>',
-        endpoint="pagination_search",
+        endpoint="pagination_search_jewelry",
         view_func=jwl_controller.pagination_search,
         methods=['GET','POST','OPTIONS'])
     
     app.add_url_rule(
         rule='/jewelry/count',
-        endpoint="count",
+        endpoint="count_jewelry",
         view_func=jwl_controller.count,
         methods=['GET'])
     
     app.add_url_rule(
         rule="/jewelry/uploadImage",
-        endpoint="upload_file",
+        endpoint="upload_file_jewelry",
         view_func=jwl_controller.upload_file,
         methods=['POST'])
     
     app.add_url_rule(
          rule="/jewelry/<string:id>",
-        endpoint="get_by_id",
+        endpoint="get_by_id_jewelry",
         view_func=jwl_controller.get_by_id,
         methods=['GET']
     )

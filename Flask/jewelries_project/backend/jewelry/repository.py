@@ -1,4 +1,4 @@
-from models import Jewelry
+from .jewelry_model import Jewelry
 from sqlalchemy import String, select, or_,and_,update,cast
 from database import Database
 

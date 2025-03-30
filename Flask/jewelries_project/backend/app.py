@@ -1,7 +1,9 @@
 from flask import Flask,jsonify,request
-import generator
+from jewelry.generator import generator
 from flask_sqlalchemy import SQLAlchemy
-from route_config import setup_routes
+from jewelry.route_config import setup_routes as jewelery_setup_routes
+from contact_info.route_config import setup_routes as contact_setup_routes
+
 from flask_cors import CORS
 import os
 from file import UPLOAD_FOLDER
@@ -41,8 +43,9 @@ def handle_preflight():
         
 #Create the database tables
 with app.app_context():
-    generator.generator(db)
-    setup_routes(app)
+    generator(db)
+    jewelery_setup_routes(app)
+    contact_setup_routes(app)
 
 if __name__ == "__main__":
     app.run(debug=True)

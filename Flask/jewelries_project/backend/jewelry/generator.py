@@ -1,5 +1,5 @@
 from typing import List
-from models import Jewelry
+from .jewelry_model import Jewelry
 from flask_sqlalchemy import SQLAlchemy
 #Generator
 def generator(db: SQLAlchemy):

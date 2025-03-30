@@ -1,8 +1,8 @@
-from repository import JewelryRepository
-from models import Jewelry
+from .repository import JewelryRepository
+from .jewelry_model import Jewelry
 from typing import List
 import uuid
-import dto
+from .dto import JewelryDTO as dto
 from werkzeug.utils import secure_filename
 from file import allowed_file
 class JewelryService:

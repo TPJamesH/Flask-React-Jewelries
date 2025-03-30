@@ -1,7 +1,7 @@
 from logging import log
 import traceback
 from flask import Blueprint, jsonify,request
-from service import JewelryService
+from .service import JewelryService
 
 class JewelryController:
     def __init__(self):

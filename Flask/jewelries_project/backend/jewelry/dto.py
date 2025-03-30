@@ -1,4 +1,4 @@
-from models import Jewelry
+from .jewelry_model import Jewelry
 
 class JewelryDTO:
     def __init__(self, type: str, name: str, provider: str, totalWeight: float, stoneWeight: float, goldWeight:float, picture: str):
