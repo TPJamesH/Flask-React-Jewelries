@@ -154,7 +154,7 @@ export default async function ProductPage() {
                                 className="rounded-full opacity-70 hover:opacity-100"
                                 onClick={nextImage}>
 
-                                <ChevronLeft className="h-6 w-6" />
+                                <ChevronRight className="h-6 w-6" />
                                 <span className="sr-only"> Next image</span>
                             </Button>
                         </div>
