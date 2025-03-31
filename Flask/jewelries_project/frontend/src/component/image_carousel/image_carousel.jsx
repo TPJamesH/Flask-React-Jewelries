@@ -1,4 +1,5 @@
 import ImgCarouselControl from "./image_carousel_control"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function ImageCarousel({ productImages }) {
     const { activeImageIndex, setActiveImageIndex, nextImage, prevImage } = ImgCarouselControl({ productImages })
