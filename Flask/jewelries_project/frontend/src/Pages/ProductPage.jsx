@@ -16,10 +16,11 @@ export default async function ProductPage() {
     const params = useParams()
     const router = useRouter()
 
-    const product = await sendHttpRequest(
+    const response = await sendHttpRequest(
         JewelryUrlConfig.JEWELRY_SERVICE_URL + `/${params.token}`,
         "GET")
 
+    const product = response.json
     if (!product) {
         return (
             <div className="container flex items-center justify-center min-h-[50vh]">
@@ -44,13 +45,6 @@ export default async function ProductPage() {
             `/placeholder.svg?height=500&width=500&text=Image+4`,
         ]
 
-        const attributes = {
-            goldWeight: product.goldWeight,
-            stoneWeight: product.stoneWeight,
-            totalWeight: product.totalWeight,
-            type: product.type,
-            provider: product.provider
-        }
         {////////////////////////////////////////////////////////////////
         }
 
@@ -91,7 +85,7 @@ export default async function ProductPage() {
                                 <Card>
                                     <CardContent className="pt-6">
                                         <div className="grid grid-cols-1 gap-4">
-                                            {Object.entries(attributes).map(([key, value]) => (
+                                            {product.map(([key, value]) => (
                                                 <div key={key} className="flex items-start space-x-2 pb-2 border-b last:border-0">
                                                     <Info className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                                                     <div>
